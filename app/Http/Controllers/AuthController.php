@@ -34,9 +34,18 @@ class AuthController extends Controller
         $user = User::create($data)->assignRole('user');
         $token = $user->createToken('appToken')->accessToken;
 
-        return response()->json([
+        /*return response()->json([
             'token' => $token,
             'user' => $user,
+        ], 200);*/
+        return response()->json([
+            'token' => $token,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->fullName,
+                'phone' => $user->phone,
+                'email' => $user->email
+            ],
         ], 200);
     }
 
@@ -49,8 +58,18 @@ class AuthController extends Controller
 
             return response()->json([
                 'token' => $token,
-                'user' => $user,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->fullName,
+                    'phone' => $user->phone,
+                    'email' => $user->email
+                ],
             ], 200);
+
+            // return response()->json([
+            //     'token' => $token,
+            //     'user' => $user,
+            // ], 200);
         }
         else{
             return response()->json([

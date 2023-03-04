@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
+                        <div class="small text-gray-500">December 12, 2022</div>
                         <span class="font-weight-bold">A new monthly report is ready to download!</span>
                     </div>
                 </a>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div>
-                        <div class="small text-gray-500">December 7, 2019</div>
+                        <div class="small text-gray-500">December 7, 2022</div>
                         $290.29 has been deposited into your account!
                     </div>
                 </a>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div>
-                        <div class="small text-gray-500">December 2, 2019</div>
+                        <div class="small text-gray-500">December 2, 2022</div>
                         Spending Alert: We've noticed unusually high spending for your account.
                     </div>
                 </a>
@@ -113,7 +113,7 @@
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="{{asset('admin/img/undraw_profile_1.svg')}}"
+                        <img class="rounded-circle" src="{{asset('admin/img/avatar.png')}}"
                             alt="...">
                         <div class="status-indicator bg-success"></div>
                     </div>
@@ -136,11 +136,19 @@
                     </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
+                    {{-- <div class="dropdown-list-image mr-3">
                         <img class="rounded-circle" src="{{asset('admin/img/undraw_profile_3.svg')}}"
                             alt="...">
                         <div class="status-indicator bg-warning"></div>
-                    </div>
+                    </div> --}}
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth()->user()->name}}</span>
+                        @if(Auth()->user()->photo)
+                          <img class="img-profile rounded-circle" src="{{Auth()->user()->photo}}">
+                        @else
+                          <img class="img-profile rounded-circle" src="{{asset('admin/img/avatar.png')}}">
+                        @endif
+                      </a>
                     <div>
                         <div class="text-truncate">Last month's report looks great, I am very happy with
                             the progress so far, keep up the good work!</div>
@@ -166,35 +174,43 @@
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                <img class="img-profile rounded-circle"
-                    src="img/undraw_profile.svg">
+         <!-- Nav Item - User Information -->
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth()->user()->name}}</span>
+          @if(Auth()->user()->photo)
+            <img class="img-profile rounded-circle" src="{{Auth()->user()->photo}}">
+          @else
+            <img class="img-profile rounded-circle" src="{{asset('backend/img/avatar.png')}}">
+          @endif
+        </a>
+        <!-- Dropdown - User Information -->
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="{{route('admin-profile')}}">
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+            Profile
+          </a>
+          <a class="dropdown-item" href="{{route('change.password.form')}}">
+            <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+            Change Password
+          </a>
+          {{-- <a class="dropdown-item" href="{{route('settings')}}">
+            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+            Settings
+          </a> --}}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> {{ __('Logout') }}
             </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
-        </li>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+      </li>
+
 
     </ul>
 
